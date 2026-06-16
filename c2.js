@@ -1,48 +1,62 @@
+// ===============================
+// USER VALIDATION SYSTEM
+// ===============================
+
 function validateUser(data) {
   const errors = [];
 
-  // Destructure safely (no mutation of original object)
-  const name = data?.name;
-  const email = data?.email;
-  const rawAge = data?.age;
-  const password = data?.password;
-  const role = data?.role;
+  // Destructure safely (no mutation)
+  const name = data.name;
+  const email = data.email;
+  const ageInput = data.age;
+  const password = data.password;
+  const roleInput = data.role;
 
-  // ---------- NAME ----------
+  // =========================
+  // NAME VALIDATION
+  // =========================
   if (typeof name !== "string" || name.trim() === "") {
     errors.push("Name cannot be empty");
   }
 
-  // ---------- EMAIL ----------
+  // =========================
+  // EMAIL VALIDATION
+  // =========================
   if (typeof email !== "string" || !email.includes("@") || !email.includes(".")) {
     errors.push("Invalid email format");
   }
 
-  // ---------- AGE (coercion required) ----------
-  const age = Number(rawAge);
+  // =========================
+  // AGE VALIDATION
+  // =========================
+  const age = Number(ageInput);
 
-  if (rawAge === undefined || rawAge === null || rawAge === "") {
-    errors.push("Age is required");
-  } else if (isNaN(age)) {
+  if (ageInput === undefined || ageInput === null || isNaN(age)) {
     errors.push("Age must be a valid number");
   } else if (age < 13 || age > 120) {
     errors.push("Age must be 13-120");
   }
 
-  // ---------- PASSWORD ----------
+  // =========================
+  // PASSWORD VALIDATION
+  // =========================
   if (typeof password !== "string" || password.length < 8) {
     errors.push("Password min 8 chars");
   }
 
-  // ---------- ROLE ----------
+  // =========================
+  // ROLE VALIDATION
+  // =========================
   const allowedRoles = ["admin", "editor", "user"];
-  const finalRole = role ?? "user";
+  const role = roleInput ?? "user";
 
-  if (role !== undefined && !allowedRoles.includes(role)) {
-    errors.push("Role must be admin, editor, or user");
+  if (roleInput && !allowedRoles.includes(roleInput)) {
+    errors.push("Invalid role");
   }
 
-  // ---------- FINAL RESPONSE ----------
+  // =========================
+  // FINAL RESPONSE
+  // =========================
   if (errors.length > 0) {
     return {
       valid: false,
@@ -53,17 +67,19 @@ function validateUser(data) {
   return {
     valid: true,
     user: {
-      name,
-      email,
-      age,
-      password,
-      role: finalRole
+      name: name,
+      email: email,
+      age: age,
+      password: password,
+      role: role
     }
   };
 }
 
 
-// ---------------- TEST CASES ----------------
+// ===============================
+// TEST CASES (REQUIRED)
+// ===============================
 
 console.log(
   "Test 1:",

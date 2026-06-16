@@ -23,9 +23,9 @@ console.log(typeAnalyser(''));
 
 
 
-typeof
-Array.isArray()
-null checking (value === null)
-Type coercion using Number(), Boolean(), and String()
-Truthy/Falsy values (0, '', null, undefined)
-Special cases: typeof null === 'object' and Boolean([]) === true
+//typeof
+//Array.isArray()
+//null checking (value === null)
+//Type coercion using Number(), Boolean(), and String()
+//Truthy/Falsy values (0, '', null, undefined)
+//Special cases: typeof null === 'object' and Boolean([]) === true
